@@ -11,7 +11,6 @@ import SwiftUI
 struct AddView: View {
     
     @StateObject var model = ViewModel()
-    @Environment(\.managedObjectContext) var viewContext
     
     var body: some View {
         Form {
@@ -47,14 +46,8 @@ struct AddView: View {
             }
             
             Button("create") {
-                let char = GenshinCharacter(context: viewContext)
-                char.name = model.name
-                char.region = model.region.rawValue
-                char.element = model.element.rawValue
-                char.patch = model.releasedVersion
-                char.isFavorite = false
-                
-                try? viewContext.save()
+                model.addNewChar()
+                model.dismiss()
             }.disabled(model.isDisabled)
         }
     }

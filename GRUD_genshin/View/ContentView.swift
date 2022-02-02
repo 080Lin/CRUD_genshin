@@ -11,72 +11,51 @@ import CoreData
 struct ContentView: View {
     
     @StateObject var model = ViewModel()
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.name)], animation: .default)
-    var characters: FetchedResults<GenshinCharacter>
     
     var body: some View {
         NavigationView {
-            VStack {
-                List(characters) { char in
-                    HStack {
-                        Text(char.wrappedName)
-                            .frame(width: 100)
-                        Spacer()
-                        VStack {
-                            Text(char.wrappedRegion)
-                                .font(.headline.bold())
-                                .foregroundStyle(.secondary)
-                            Text("\(char.patch.preciseTo(1)) version")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        Text(char.wrappedElement)
-                            .frame(width: 70)
-                    }.swipeActions(edge: .leading, allowsFullSwipe: true) {
-                        if char.isFavorite {
-                            Button {
-                                char.isFavorite.toggle()
-                                try? model.viewContext.save()
-                            } label: {
-                                Label("Person", systemImage: "star.fill")
-                                    .foregroundColor(.yellow)
+            List {
+                ForEach(model.characters) { char in
+                    NavigationLink {
+                        DetailScreen(character: char)
+                    } label: {
+                        HStack {
+                            Text(char.wrappedName)
+                            VStack {
+                                Text(char.wrappedRegion)
+                                    .font(.caption.bold())
+                                    .foregroundColor(.secondary)
+                                Text("\(char.patch)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
                             }
-                        } else {
-                            Button {
-                                char.isFavorite.toggle()
-                                try? model.viewContext.save()
-                            } label: {
-                                Label("Person", systemImage: "star")
-                                    .foregroundColor(.gray)
-                            }
+                            Text(char.wrappedElement)
                         }
-                        
+                    }
+                }.onDelete { index in
+                    index.forEach { id in
+                        let char = model.characters[id]
+                        CoreDataManager.shared.deleteCharacter(char)
+                        model.getAllCharacters()
                     }
                 }
                 
+            }.onAppear {
+                model.getAllCharacters()
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        model.showAddView.toggle()
-                    } label: {
-                        Label("New", systemImage: "plus.circle")
-                    }.sheet(isPresented: $model.showAddView) {
-                        NavigationView {
-                            AddView()
-                                .navigationBarTitle("add view")
-                        }
-                    }
+                Button {
+                    model.showAddView.toggle()
+                } label: {
+                Image(systemName: "plus.circle")
+                }
+            }
+            .sheet(isPresented: $model.showAddView) {
+                NavigationView {
+                    AddView()
                 }
             }
         }
     }
 }
 
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-    }
-}

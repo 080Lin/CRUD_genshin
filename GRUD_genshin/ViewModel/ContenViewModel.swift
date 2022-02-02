@@ -14,13 +14,19 @@ extension ContentView {
     
     @MainActor class ViewModel: ObservableObject {
         
-        @Environment(\.managedObjectContext) var viewContext
         
-        // think bout it later on
-        //        @FetchRequest(sortDescriptors: [], animation: .default)
-        //        var characters: FetchedResults<GenshinCharacter>
+        @Published var showAddView: Bool = false {
+            willSet {
+                objectWillChange.send()
+                getAllCharacters()
+            }
+        }
+        
+        @Published var characters: [GenshinCharacter] = []
         
         
-        @Published var showAddView: Bool = false
+        func getAllCharacters() {
+           characters = CoreDataManager.shared.getAllCharacters()
+        }
     }
 }

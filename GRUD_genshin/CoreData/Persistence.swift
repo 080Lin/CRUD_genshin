@@ -5,33 +5,58 @@
 //  Created by Максим Нуждин on 01.02.2022.
 //
 
+import SwiftUI
 import CoreData
 
-struct PersistenceController {
-    static let shared = PersistenceController()
-
-    let container: NSPersistentContainer
-
-    init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "CRUD_genshin")
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-        }
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
+class CoreDataManager {
+    
+    let persistentContainer: NSPersistentContainer
+    
+    static let shared = CoreDataManager()
+    
+    var viewContext: NSManagedObjectContext {
+        persistentContainer.viewContext
     }
     
     func save() {
-        let context = container.viewContext
+        do {
+            try viewContext.save()
+        } catch {
+            viewContext.rollback()
+            print("Unable to save data. \(error)")
+        }
+    }
+    
+    func getAllCharacters() -> [GenshinCharacter] {
+        let request: NSFetchRequest<GenshinCharacter> = GenshinCharacter.fetchRequest()
         
         do {
-            try context.save()
+            return try viewContext.fetch(request)
         } catch {
-            print(error.localizedDescription)
             print(error)
+            return []
+        }
+    }
+    
+    func deleteCharacter(_ char: GenshinCharacter) {
+        
+        persistentContainer.viewContext.delete(char)
+        
+        save()
+    }
+    
+    private init(inMemory: Bool = false) {
+        
+        persistentContainer = NSPersistentContainer(name: "CRUD_genshin")
+        
+        if inMemory {
+            persistentContainer.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "dev/null")
+        }
+        
+        persistentContainer.loadPersistentStores { description, err in
+            if let err = err {
+                fatalError(err.localizedDescription)
+            }
         }
     }
 }

@@ -6,11 +6,14 @@
 //
 
 import Foundation
-
+import CoreData
+import SwiftUI
 
 extension AddView {
     
     @MainActor class ViewModel: ObservableObject {
+        
+        @Environment(\.dismiss) var dismiss
         
         @Published var name = ""
         @Published var element: GenshinCharacterAdditions.Element = .pyro
@@ -19,6 +22,16 @@ extension AddView {
         
         var isDisabled: Bool {
             name.isEmpty
+        }
+        
+        func addNewChar() {
+            let char = GenshinCharacter(context: CoreDataManager.shared.viewContext)
+            char.name = name
+            char.region = region.rawValue
+            char.element = element.rawValue
+            char.patch = releasedVersion
+            
+            CoreDataManager.shared.save()
         }
     }
 }

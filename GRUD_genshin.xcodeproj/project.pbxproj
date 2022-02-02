@@ -20,6 +20,8 @@
 		8924B6DB27AA48BA003313F7 /* GenshinCharacter+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924B6D927AA48BA003313F7 /* GenshinCharacter+CoreDataClass.swift */; };
 		8924B6DC27AA48BA003313F7 /* GenshinCharacter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924B6DA27AA48BA003313F7 /* GenshinCharacter+CoreDataProperties.swift */; };
 		8924B6DF27AA571E003313F7 /* SupportExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924B6DE27AA571E003313F7 /* SupportExtensions.swift */; };
+		8924B6E327AA925C003313F7 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924B6E227AA925C003313F7 /* DetailView.swift */; };
+		8924B6E527AA929D003313F7 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8924B6E427AA929D003313F7 /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		8924B6D927AA48BA003313F7 /* GenshinCharacter+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GenshinCharacter+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8924B6DA27AA48BA003313F7 /* GenshinCharacter+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GenshinCharacter+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8924B6DE27AA571E003313F7 /* SupportExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportExtensions.swift; sourceTree = "<group>"; };
+		8924B6E227AA925C003313F7 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		8924B6E427AA929D003313F7 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				8924B6B527A9AD2A003313F7 /* ContentView.swift */,
+				8924B6E227AA925C003313F7 /* DetailView.swift */,
 				8924B6D527AA3F9D003313F7 /* AddView.swift */,
 			);
 			path = View;
@@ -102,6 +107,7 @@
 			children = (
 				8924B6CD27AA3D78003313F7 /* ContenViewModel.swift */,
 				8924B6D727AA41A6003313F7 /* AddViewModel.swift */,
+				8924B6E427AA929D003313F7 /* DetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -204,6 +210,8 @@
 				8924B6B627A9AD2A003313F7 /* ContentView.swift in Sources */,
 				8924B6B427A9AD2A003313F7 /* GRUD_genshinApp.swift in Sources */,
 				8924B6D327AA3E3B003313F7 /* GenshinCharacterModel.swift in Sources */,
+				8924B6E327AA925C003313F7 /* DetailView.swift in Sources */,
+				8924B6E527AA929D003313F7 /* DetailViewModel.swift in Sources */,
 				8924B6DB27AA48BA003313F7 /* GenshinCharacter+CoreDataClass.swift in Sources */,
 				8924B6CC27A9BFAC003313F7 /* CRUD_genshin.xcdatamodeld in Sources */,
 				8924B6DF27AA571E003313F7 /* SupportExtensions.swift in Sources */,
