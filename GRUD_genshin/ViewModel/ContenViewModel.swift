@@ -28,5 +28,16 @@ extension ContentView {
         func getAllCharacters() {
            characters = CoreDataManager.shared.getAllCharacters()
         }
+
+        func deleteCharacter(at offSets: IndexSet) {
+            offSets.forEach { ind in
+                let char = characters[ind]
+                let existChar = CoreDataManager.shared.getCharacterByID(id: char.objectID)
+                guard let existChar = existChar else { return }
+                CoreDataManager.shared.deleteCharacter(existChar)
+            }
+            
+            getAllCharacters()
+        }
     }
 }

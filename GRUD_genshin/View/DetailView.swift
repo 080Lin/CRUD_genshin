@@ -28,7 +28,9 @@ struct DetailScreen: View {
         }
         
         Button("UPD") {
-            character.name = model.name
+            if !model.name.isEmpty {
+                character.name = model.name
+            }
             character.region = model.region.rawValue
             CoreDataManager.shared.save()
         }

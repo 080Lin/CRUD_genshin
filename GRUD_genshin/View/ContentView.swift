@@ -12,6 +12,7 @@ struct ContentView: View {
     
     @StateObject var model = ViewModel()
     
+    
     var body: some View {
         NavigationView {
             List {
@@ -29,15 +30,21 @@ struct ContentView: View {
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
+                            Image(systemName: char.isFavorite ? "star.fill" : "star")
+                                .foregroundColor(char.isFavorite ? .yellow : .black)
                             Text(char.wrappedElement)
+                        }.swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button {
+                                char.isFavorite.toggle()
+                                CoreDataManager.shared.save()
+                                model.getAllCharacters()
+                            } label: {
+                                Image(systemName: "circle.fill")
+                            }
                         }
                     }
                 }.onDelete { index in
-                    index.forEach { id in
-                        let char = model.characters[id]
-                        CoreDataManager.shared.deleteCharacter(char)
-                        model.getAllCharacters()
-                    }
+                    model.deleteCharacter(at: index)
                 }
                 
             }.onAppear {

@@ -30,6 +30,7 @@ extension AddView {
             char.region = region.rawValue
             char.element = element.rawValue
             char.patch = releasedVersion
+            char.isFavorite = false
             
             CoreDataManager.shared.save()
         }

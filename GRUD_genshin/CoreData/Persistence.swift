@@ -38,6 +38,14 @@ class CoreDataManager {
         }
     }
     
+    func getCharacterByID(id: NSManagedObjectID) -> GenshinCharacter? {
+        do {
+            return try viewContext.existingObject(with: id) as? GenshinCharacter
+        } catch {
+            return nil
+        }
+    }
+    
     func deleteCharacter(_ char: GenshinCharacter) {
         
         persistentContainer.viewContext.delete(char)
