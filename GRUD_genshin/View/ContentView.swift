@@ -35,9 +35,7 @@ struct ContentView: View {
                             Text(char.wrappedElement)
                         }.swipeActions(edge: .leading, allowsFullSwipe: true) {
                             Button {
-                                char.isFavorite.toggle()
-                                CoreDataManager.shared.save()
-                                model.getAllCharacters()
+                                model.toggleFavorite(char)
                             } label: {
                                 Image(systemName: "circle.fill")
                             }

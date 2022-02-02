@@ -39,5 +39,12 @@ extension ContentView {
             
             getAllCharacters()
         }
+        
+        func toggleFavorite(_ char: GenshinCharacter) {
+            char.isFavorite.toggle()
+            CoreDataManager.shared.save()
+            
+            getAllCharacters()
+        }
     }
 }
